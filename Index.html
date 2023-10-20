@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Create a column layout with Flexbox */
+      .row {
+        display: flex;
+      }
+
+      /* Left column (menu) */
+      .left {
+        flex: 35%;
+        padding: 15px 0;
+      }
+
+      .left h2 {
+        padding-left: 8px;
+      }
+
+      /* Right column (page content) */
+      .right {
+        flex: 65%;
+        padding: 15px;
+      }
+
+      /* Style the search box */
+      #Searchbar {
+        width: 100%;
+        font-size: 18px;
+        padding: 11px;
+        border: 1px solid #ddd;
+      }
+
+      /* Style the navigation menu inside the left column */
+      #Menu {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #Menu li a {
+        padding: 12px;
+        text-decoration: none;
+        color: black;
+        display: block
+      }
+
+      #Menu li a:hover {
+        background-color: #eee;
+      }
+
+      .tab-content {
+        display: none;
+        padding: 20px;
+        border: 1px solid black;
+        margin: 10px;
+        height: 700px; overflow-y: auto;
+      }
+
+      .right.sticky {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 65%; /* Adjust the width as needed */
+        height: 100%;
+        background-color: rgb(128, 128, 128);
+      }
+
+      .right.sticky h1 {
+        padding: 10px;
+      }
+
+      .image_size {
+        border: 1px solid black;
+        width: 300px;
+        height: 460px;
+      }
+
+      .right_grid_item_ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .right_grid_item_li {
+        width: 33.33%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      .go_to_page {
+        border: 2px solid green;
+        font-size: 32px;
+
+        text-decoration: none; /* Remove underline */
+        outline: none; /* Remove the default outline */
+        outline-style: none;
+      }
+  
+    </style>
+    <title>Broens Collection</title>
+  </head>
+  <body style="background-color: rgb(211, 211, 211);">
+    <hr>
+    <center>
+      <h1>Broens Collection</h1>
+    </center>
+    <hr>
+
+
+    <div class="row">
+      <div class="left" style="background-color: rgb(128, 128, 142);">
+        <h2>Menu</h2>
+        <input type="text" id="Searchbar" onkeyup="search()" placeholder="Search.." title="Type in a category">
+        <ul id="Menu">
+
+          <li>
+            <a data-tab="Jumbo_books">Jumbo books</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="right" style="background-color: rgb(128, 128, 128);">
+        <div id="Jumbo_books" class="tab-content">
+          <h1><center>Jumbo bog Collection</center></h1><br><a href="Jumbo bog/Jumbo-bog-list.html" class="go_to_page">Jumbo Bog</a>
+          
+          <hr>
+
+
+          <ul class="right_grid_item_ul">
+            <!--1 Grid Item-->
+            <li class="right_grid_item_li"><h2>Jumbo bog 4</h2>
+              <img class="image_size" src="Jumbo bog/Jumbo bog Bøger/Jumbo Bog 4 Front.png">
+            </li>
+            <!--2 Grid Item-->
+            <li class="right_grid_item_li"><h2>Jumbo bog 70</h2>
+              <img class="image_size" src="Jumbo bog/Jumbo bog Bøger/Jumbo Bog 70 Front.png">
+            </li>
+            <!--3 Grid Item-->
+            <li class="right_grid_item_li"><h2>Jumbo bog 163</h2>
+              <img class="image_size" src="Jumbo bog/Jumbo bog Bøger/Jumbo Bog 163 Front.png">
+            </li>
+          </ul>
+
+
+        </div>
+       
+      </div>
+    </div>
+
+    <script>
+      function search() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("Searchbar");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("Menu");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+          } else {
+            li[i].style.display = "none";
+          }
+        }
+      }
+
+      var tabContents = document.querySelectorAll(".tab-content");
+
+      function openTab(tabId) {
+        tabContents.forEach(function (content) {
+          content.style.display = "none";
+        });
+        var tabContent = document.getElementById(tabId);
+        if (tabContent) {
+          tabContent.style.display = "block";
+        }
+      }
+
+      var listItems = document.querySelectorAll("#Menu li a");
+      listItems.forEach(function (item) {
+        item.addEventListener("click", function () {
+          var tabId = this.getAttribute("data-tab");
+          openTab(tabId);
+        });
+      });
+
+      var rightColumn = document.querySelector(".right");
+      var rightColumnTop = rightColumn.offsetTop;
+
+      window.onscroll = function () {
+        if (window.pageYOffset > rightColumnTop) {
+          rightColumn.classList.add("sticky");
+        } else {
+          rightColumn.classList.remove("sticky");
+        }
+      };
+    </script>
+  </body>
+</html>
